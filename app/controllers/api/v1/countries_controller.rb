@@ -3,6 +3,8 @@ class Api::V1::CountriesController < ApplicationController
 
   def index
     @countries = Country.order(:name)
+    return unless stale?(@countries)
+
     render json: { message: 'loaded countries', data: @countries }, status: :ok
   end
 

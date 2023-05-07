@@ -39,4 +39,8 @@ class User < ApplicationRecord
   validates :password_digest, presence: true, length: { maximum: 255 }
   validates :address, :zip_code, :phone_number, length: { maximum: 255 }
   validates :payment_info, length: { maximum: 255 }
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 end

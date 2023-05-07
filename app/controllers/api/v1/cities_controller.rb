@@ -3,6 +3,8 @@ class Api::V1::CitiesController < ApplicationController
 
   def index
     @cities = City.order(:name)
+    return unless stale?(@cities)
+
     render json: { message: 'loaded cities', data: @Cities }, status: :ok
   end
 

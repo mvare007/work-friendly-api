@@ -4,21 +4,17 @@ namespace :v1 do
   resources :businesses, concerns: :paginatable
   resources :business_types
   resources :business_users
-
-  resources :business_facility_amenities
   resources :business_facility_amenity_categories
-  resources :available_amenities
+  resources :business_facility_amenities, concerns: :paginatable
 
   resources :work_spaces
-
   resources :work_space_amenities
-  resources :work_space_available_amenities
-  resources :work_space_amenity_categories
+  resources :work_space_amenity_categories, concerns: :paginatable
 
   resources :countries
   resources :cities
 
-  resources :bookings
-  resources :reviews
-  resources :schedule_days
+  resources :bookings, concerns: :paginatable
+  resources :reviews, concerns: :paginatable
+  resources :schedule_days, except: [:show]
 end

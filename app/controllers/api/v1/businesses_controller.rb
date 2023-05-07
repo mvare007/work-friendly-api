@@ -5,6 +5,8 @@ class Api::V1::BusinessesController < ApplicationController
     @businesses = Business.order(:name)
                           .page(params[:page])
                           .per(params[:per_page])
+    return unless stale?(@businesses)
+
     render json: { message: 'loaded businesses', data: @businesses }, status: :ok
   end
 

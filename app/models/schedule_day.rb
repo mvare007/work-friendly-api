@@ -31,6 +31,12 @@ class ScheduleDay < ApplicationRecord
   validates :holiday, inclusion: { in: [true, false] }
   validates :holiday_name, length: { maximum: 255 }
 
+  scope :for_business, ->(business_id) { where(business_id:) }
+
+  def to_s
+    "#{holiday ? holiday_name : weekday_name} #{open_time.strftime('%I:%M %p')} - #{close_time.strftime('%I:%M %p')}"
+  end
+
   def weekday_name
     I18n.t('date.day_names')[weekday]
   end

@@ -28,12 +28,24 @@ class Booking < ApplicationRecord
   # Validations
   validates :start_time, :end_time, presence: true
   validate :booking_times, if: -> { start_time.present? && end_time.present? }
+  validate :start_time_cannot_be_in_the_past, if: -> { start_time.present? }
+  validate :end_time_cannot_be_in_the_past, if: -> { end_time.present? }
+  validate :start_time_cannot_be_after_end_time, if: -> { start_time.present? && end_time.present? }
+
+  scope :for_business, ->(business_id) { joins(:work_space).where(work_spaces: { business_id: }) }
+  scope :for_user, ->(user_id) { where(user_id:) }
 
   private
 
-  def booking_times
-    errors.add(:start_time, 'must be before end time') if start_time > end_time
+  def start_time_cannot_be_in_the_past
     errors.add(:start_time, 'must be in the future') if start_time < DateTime.now
+  end
+
+  def end_time_cannot_be_in_the_past
     errors.add(:end_time, 'must be in the future') if end_time < DateTime.now
+  end
+
+  def start_time_cannot_be_after_end_time
+    errors.add(:start_time, 'must be before end time') if start_time > end_time
   end
 end

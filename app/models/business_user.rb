@@ -19,10 +19,16 @@
 #  fk_rails_...  (business_id => businesses.id)
 #
 class BusinessUser < ApplicationRecord
-	# Associations
-	belongs_to :business
+  # Associations
+  belongs_to :business
 
-	# Validations
-	validates :first_name, :last_name, presence: true, length: { maximum: 255 }
-	validates :admin, inclusion: { in: [true, false] }
+  # Validations
+  validates :first_name, :last_name, presence: true, length: { maximum: 255 }
+  validates :admin, inclusion: { in: [true, false] }
+
+  scope :for_business, ->(business_id) { where(business_id:) }
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 end
