@@ -16,5 +16,5 @@
 	BusinessType.find_or_create_by!(name:)
 end
 
-
+Countries::SyncService.call
 

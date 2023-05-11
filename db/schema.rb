@@ -26,9 +26,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_05_155726) do
   end
 
   create_table "business_types", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_business_types_on_name", unique: true
   end
 
   create_table "business_users", force: :cascade do |t|
@@ -78,11 +79,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_05_155726) do
 
   create_table "countries", force: :cascade do |t|
     t.string "name", null: false
-    t.string "iso_code"
+    t.string "iso2_code"
+    t.string "iso3_code"
     t.string "currency"
     t.integer "dialing_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_countries_on_name", unique: true
   end
 
   create_table "facility_amenities", force: :cascade do |t|
@@ -103,12 +106,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_05_155726) do
   end
 
   create_table "reviews", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "business_id", null: false
     t.integer "rating", default: 0, null: false
     t.text "comment"
+    t.bigint "user_id", null: false
+    t.bigint "business_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["business_id", "user_id"], name: "index_reviews_on_business_id_and_user_id", unique: true
     t.index ["business_id"], name: "index_reviews_on_business_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end

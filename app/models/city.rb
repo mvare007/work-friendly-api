@@ -26,4 +26,12 @@ class City < ApplicationRecord
   # Validations
   validates :name, presence: true, length: { maximum: 255 }
   validates :active, inclusion: { in: [true, false] }
+
+  def activate!
+    update!(active: true)
+  end
+
+  def deactivate!
+    update!(active: false)
+  end
 end

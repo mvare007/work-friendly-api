@@ -12,8 +12,9 @@
 #
 # Indexes
 #
-#  index_reviews_on_business_id  (business_id)
-#  index_reviews_on_user_id      (user_id)
+#  index_reviews_on_business_id              (business_id)
+#  index_reviews_on_business_id_and_user_id  (business_id,user_id) UNIQUE
+#  index_reviews_on_user_id                  (user_id)
 #
 # Foreign Keys
 #
