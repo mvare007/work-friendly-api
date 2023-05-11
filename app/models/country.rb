@@ -11,10 +11,10 @@
 #  updated_at   :datetime         not null
 #
 class Country < ApplicationRecord
-	# Associations
-	has_many :cities, dependent: :destroy
-	has_many :businesses, through: :cities
+  # Associations
+  has_many :cities, dependent: :destroy
+  has_many :businesses, through: :cities
 
-	# Validations
-	validates :name, presence: true, length: { maximum: 255 }
+  # Validations
+  validates :name, presence: true, length: { maximum: 255 }, uniqueness: true
 end

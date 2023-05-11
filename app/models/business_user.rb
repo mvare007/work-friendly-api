@@ -28,7 +28,5 @@ class BusinessUser < ApplicationRecord
 
   scope :for_business, ->(business_id) { where(business_id:) }
 
-  def full_name
-    "#{first_name} #{last_name}"
-  end
+  def full_name = "#{first_name} #{last_name}"
 end

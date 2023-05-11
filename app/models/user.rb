@@ -40,7 +40,5 @@ class User < ApplicationRecord
   validates :address, :zip_code, :phone_number, length: { maximum: 255 }
   validates :payment_info, length: { maximum: 255 }
 
-  def full_name
-    "#{first_name} #{last_name}"
-  end
+  def full_name = "#{first_name} #{last_name}"
 end

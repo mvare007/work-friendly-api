@@ -30,6 +30,7 @@ class Review < ApplicationRecord
     only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 5
   }
   validates :comment, length: { maximum: 1000 }
+  validates :business_id, uniqueness: { scope: :user_id }
 
   scope :for_business, ->(business_id) { where(business_id:) }
   scope :for_user, ->(user_id) { where(user_id:) }

@@ -39,6 +39,7 @@ class Business < ApplicationRecord
   has_many :reviews, dependent: :restrict_with_error
 
   # Validations
-  validates :name, :address, :zip_code, :email, presence: true, length: { maximum: 255 }
+  validates :email, presence: true, length: { maximum: 255 }, uniqueness: true
+  validates :name, :address, :zip_code, presence: true, length: { maximum: 255 }
   validates :capacity, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_nil: true
 end

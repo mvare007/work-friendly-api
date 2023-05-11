@@ -12,5 +12,5 @@ class BusinessType < ApplicationRecord
   has_many :businesses, dependent: :restrict_with_error
 
   # Validations
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true, length: { maximum: 255 }
 end
