@@ -1,3 +1,33 @@
+# == Schema Information
+#
+# Table name: businesses
+#
+#  id               :bigint           not null, primary key
+#  address          :string           not null
+#  capacity         :integer
+#  email            :string           not null
+#  latitude         :string
+#  longitude        :string
+#  name             :string           not null
+#  phone_number     :string
+#  vat_number       :string
+#  zip_code         :string           not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  business_type_id :bigint           not null
+#  city_id          :bigint           not null
+#
+# Indexes
+#
+#  index_businesses_on_business_type_id  (business_type_id)
+#  index_businesses_on_city_id           (city_id)
+#  index_businesses_on_email             (email) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (business_type_id => business_types.id)
+#  fk_rails_...  (city_id => cities.id)
+#
 FactoryBot.define do
   factory :business do
     name { Faker::Company.name }

@@ -1,3 +1,30 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id              :bigint           not null, primary key
+#  address         :string
+#  email           :string           not null
+#  first_name      :string           not null
+#  last_login      :datetime
+#  last_name       :string           not null
+#  password_digest :string           not null
+#  payment_info    :string
+#  phone_number    :string
+#  zip_code        :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  city_id         :bigint           not null
+#
+# Indexes
+#
+#  index_users_on_city_id  (city_id)
+#  index_users_on_email    (email) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (city_id => cities.id)
+#
 FactoryBot.define do
   factory :user do
     first_name { Faker::Name.name }

@@ -1,3 +1,25 @@
+# == Schema Information
+#
+# Table name: schedule_days
+#
+#  id           :bigint           not null, primary key
+#  close_time   :time
+#  holiday      :boolean
+#  holiday_name :string
+#  open_time    :time
+#  weekday      :integer
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  business_id  :bigint           not null
+#
+# Indexes
+#
+#  index_schedule_days_on_business_id  (business_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (business_id => businesses.id)
+#
 FactoryBot.define do
   factory :schedule_day do
     sequence(:weekday, (0..6).cycle)
