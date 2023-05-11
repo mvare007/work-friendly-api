@@ -39,6 +39,9 @@ gem "rack-cors"
 #  A Scope & Engine based, clean, powerful, customizable and sophisticated paginator
 gem 'kaminari'
 
+# Minimal authorization through OO design and pure Ruby classes
+gem 'pundit'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
@@ -56,6 +59,14 @@ group :development do
 
     # Catch unsafe migrations
     gem "strong_migrations"
+end
+
+group :test do
+  # A set of RSpec matchers for testing Pundit authorisation policies.
+  gem 'pundit-matchers', '~> 2.1'
+
+  # Makes tests easy on the fingers and the eyes
+  gem 'shoulda'
 end
 
 
