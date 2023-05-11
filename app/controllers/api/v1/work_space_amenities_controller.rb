@@ -45,7 +45,7 @@ class WorkSpaceAmenitesController < ApplicationController
   private
 
   def work_space_amenity_params
-    params.permit(:name)
+    params.permit(:name, :description, :work_space_amenity_category_id)
   end
 
   def set_work_space_amenity
