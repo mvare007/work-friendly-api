@@ -2,7 +2,8 @@ class Api::V1::BusinessesController < ApplicationController
   before_action :set_business, only: %i[show update destroy]
 
   def index
-    @businesses = Business.order(:name)
+    @businesses = Business.includes(:schedule_days, :social_links)
+                          .order(:name)
                           .page(params[:page])
                           .per(params[:per_page])
     return unless stale?(@businesses)
@@ -57,7 +58,17 @@ class Api::V1::BusinessesController < ApplicationController
       :vat_number,
       :zip_code,
       :business_type_id,
-      :city_id
+      :city_id,
+      social_links_attributes: %i[id platform url _destroy],
+      schedule_days_attributes: %i[
+        id
+        holiday
+        holiday_name
+        weekday
+        open_time
+        close_time
+        _destroy
+      ]
     )
   end
 

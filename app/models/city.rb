@@ -3,7 +3,6 @@
 # Table name: cities
 #
 #  id         :bigint           not null, primary key
-#  active     :boolean          default(FALSE), not null
 #  name       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -25,7 +24,6 @@ class City < ApplicationRecord
 
   # Validations
   validates :name, presence: true, length: { maximum: 255 }
-  validates :active, inclusion: { in: [true, false] }
 
   def activate!
     update!(active: true)

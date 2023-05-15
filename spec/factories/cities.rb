@@ -3,7 +3,6 @@
 # Table name: cities
 #
 #  id         :bigint           not null, primary key
-#  active     :boolean          default(FALSE), not null
 #  name       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

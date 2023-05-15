@@ -3,8 +3,9 @@
 # Table name: countries
 #
 #  id           :bigint           not null, primary key
+#  active       :boolean          default(FALSE), not null
 #  currency     :string
-#  dialing_code :integer
+#  dialing_code :string
 #  iso2_code    :string
 #  iso3_code    :string
 #  name         :string           not null
@@ -20,7 +21,8 @@ FactoryBot.define do
     name { Faker::Address.country }
     currency { Faker::Currency.code }
     dialing_code { Faker::PhoneNumber.subscriber_number(length: 3) }
-    iso_code { Faker::Address.country_code }
+    iso2_code { Faker::Address.country_code }
+    iso3_code { Faker::Address.country_code_long }
 
     initialize_with do
       Country.find_by(name: attributes[:name]) || Country.new(attributes)

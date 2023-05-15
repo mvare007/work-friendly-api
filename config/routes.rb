@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   concern :paginatable do
-    get '(page/:page)', action: :index, on: :collection, as: ''
+    get '(page/:page/per_page/:per_page)', action: :index, on: :collection, as: ''
   end
 
   namespace :api, constraints: ApiConstraint.new, defaults: { format: :json } do

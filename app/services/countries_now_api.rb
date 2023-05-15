@@ -1,22 +1,20 @@
 require 'net/http'
 
 class CountriesNowApi
-  BASE_URL = 'https://countriesnow.space/api'.freeze
-
   def initialize(version: 'v0.1')
     @version = version
   end
 
   def fetch_all_countries_and_cities
-    api_fetch("#{BASE_URL}/#{@version}/countries")
+    api_fetch("#{base_url}/countries")
   end
 
   def fetch_country_currencies
-    api_fetch("#{BASE_URL}/#{@version}/countries/currency")
+    api_fetch("#{base_url}/countries/currency")
   end
 
   def fetch_country_dial_codes
-    api_fetch("#{BASE_URL}/#{@version}/countries/codes")
+    api_fetch("#{base_url}/countries/codes")
   end
 
   private
@@ -32,5 +30,9 @@ class CountriesNowApi
     data[:data]
   rescue StandardError => e
     Rails.logger.error("Error fetching data from #{url}\n#{e.message}")
+  end
+
+  def base_url
+    "https://countriesnow.space/api/#{@version}"
   end
 end

@@ -32,11 +32,16 @@ class Business < ApplicationRecord
   # Associations
   belongs_to :city
   belongs_to :business_type
+  has_and_belongs_to_many :facility_amenities
   has_one :country, through: :city
   has_many :schedule_days, dependent: :destroy
-  has_many :business_users, dependent: :destroy
+  has_many :social_links, dependent: :destroy
   has_many :work_spaces, dependent: :destroy
   has_many :reviews, dependent: :restrict_with_error
+
+  # Nested attributes
+  accepts_nested_attributes_for :schedule_days, allow_destroy: true
+  accepts_nested_attributes_for :social_links, allow_destroy: true
 
   # Validations
   validates :email, presence: true, length: { maximum: 255 }, uniqueness: true

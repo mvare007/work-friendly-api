@@ -1,6 +1,10 @@
 class Countries::SyncService
   include Callable
 
+  ACTIVE_COUNTRIES = [
+    'Portugal'
+  ].freeze
+
   def initialize(api_client: CountriesNowApi.new)
     @api_client = api_client
   end
@@ -17,7 +21,12 @@ class Countries::SyncService
     countries = @api_client.fetch_all_countries_and_cities
 
     countries.each do |country_data|
-      country = Country.find_or_create_by(name: country_data[:country])
+      country_name = country_data[:country]
+      country = Country.find_or_initialize_by(name: country_name)
+      country.active = ACTIVE_COUNTRIES.include?(country_name)
+      country.save!
+      next unless country.active?
+
       country_data[:cities].each do |city_name|
         country.cities.find_or_create_by(name: city_name)
       end

@@ -12,8 +12,8 @@ gem "pg", "~> 1.1"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
 
-# Build JSON APIs with ease [https://github.com/rails/jbuilder]
-# gem "jbuilder"
+# A simple and fast JSON API template engine for Ruby on Rails
+gem 'jb'
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
@@ -54,11 +54,14 @@ group :development, :test do
 end
 
 group :development do
-    # Annotate Rails classes with schema and routes info
-    gem 'annotate', require: false
+  # Annotate Rails classes with schema and routes info
+  gem 'annotate', require: false
 
-    # Catch unsafe migrations
-    gem "strong_migrations"
+  # Catch unsafe migrations
+  gem "strong_migrations"
+
+  # Shopify’s Ruby Style Guide ruby-style-guide.shopify.dev
+  gem "rubocop-shopify", require: false
 end
 
 group :test do

@@ -27,7 +27,6 @@ class Booking < ApplicationRecord
 
   # Validations
   validates :start_time, :end_time, presence: true
-  validate :booking_times, if: -> { start_time.present? && end_time.present? }
   validate :start_time_cannot_be_in_the_past, if: -> { start_time.present? }
   validate :end_time_cannot_be_in_the_past, if: -> { end_time.present? }
   validate :start_time_cannot_be_after_end_time, if: -> { start_time.present? && end_time.present? }

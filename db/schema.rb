@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_05_155726) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_15_084810) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -30,16 +30,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_05_155726) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_business_types_on_name", unique: true
-  end
-
-  create_table "business_users", force: :cascade do |t|
-    t.string "first_name", null: false
-    t.string "last_name", null: false
-    t.boolean "admin", default: false, null: false
-    t.bigint "business_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["business_id"], name: "index_business_users_on_business_id"
   end
 
   create_table "businesses", force: :cascade do |t|
@@ -70,7 +60,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_05_155726) do
 
   create_table "cities", force: :cascade do |t|
     t.string "name", null: false
-    t.boolean "active", default: false, null: false
     t.bigint "country_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -82,7 +71,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_05_155726) do
     t.string "iso2_code"
     t.string "iso3_code"
     t.string "currency"
-    t.integer "dialing_code"
+    t.string "dialing_code"
+    t.boolean "active", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_countries_on_name", unique: true
@@ -127,6 +117,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_05_155726) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["business_id"], name: "index_schedule_days_on_business_id"
+  end
+
+  create_table "social_links", force: :cascade do |t|
+    t.integer "platform", null: false
+    t.string "url", null: false
+    t.bigint "business_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["business_id", "platform"], name: "index_social_links_on_business_id_and_platform", unique: true
+    t.index ["business_id"], name: "index_social_links_on_business_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -186,7 +186,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_05_155726) do
 
   add_foreign_key "bookings", "users"
   add_foreign_key "bookings", "work_spaces"
-  add_foreign_key "business_users", "businesses"
   add_foreign_key "businesses", "business_types"
   add_foreign_key "businesses", "cities"
   add_foreign_key "cities", "countries"
@@ -194,6 +193,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_05_155726) do
   add_foreign_key "reviews", "businesses"
   add_foreign_key "reviews", "users"
   add_foreign_key "schedule_days", "businesses"
+  add_foreign_key "social_links", "businesses"
   add_foreign_key "users", "cities"
   add_foreign_key "work_space_amenities", "work_space_amenity_categories"
   add_foreign_key "work_spaces", "businesses"

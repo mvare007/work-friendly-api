@@ -3,8 +3,9 @@
 # Table name: countries
 #
 #  id           :bigint           not null, primary key
+#  active       :boolean          default(FALSE), not null
 #  currency     :string
-#  dialing_code :integer
+#  dialing_code :string
 #  iso2_code    :string
 #  iso3_code    :string
 #  name         :string           not null
@@ -22,4 +23,8 @@ class Country < ApplicationRecord
 
   # Validations
   validates :name, presence: true, length: { maximum: 255 }, uniqueness: true
+
+  def timezones
+    TZInfo::Country.get(iso2_code)&.zones
+  end
 end
