@@ -12,9 +12,9 @@
 #  index_facility_amenity_categories_on_name  (name) UNIQUE
 #
 class FacilityAmenityCategory < ApplicationRecord
-	# Associations
-	has_many :facility_amenities, dependent: :nullify
+  # Associations
+  has_many :facility_amenities, dependent: :nullify
 
-	# Validations
-	validates :name, presence: true, length: { maximum: 255 }, uniqueness: true
+  # Validations
+  validates :name, presence: true, length: { maximum: 255 }, uniqueness: true
 end

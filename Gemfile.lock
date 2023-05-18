@@ -66,9 +66,7 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
-    annotate (3.2.0)
-      activerecord (>= 3.2, < 8.0)
-      rake (>= 10.4, < 14.0)
+    annotaterb (4.1.0)
     ast (2.4.2)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
@@ -97,6 +95,17 @@ GEM
       reline (>= 0.3.0)
     jb (0.8.0)
     json (2.6.3)
+    jsonapi-deserializable (0.2.0)
+    jsonapi-parser (0.1.1)
+    jsonapi-rails (0.4.1)
+      jsonapi-parser (~> 0.1.0)
+      jsonapi-rb (~> 0.5.0)
+    jsonapi-rb (0.5.0)
+      jsonapi-deserializable (~> 0.2.0)
+      jsonapi-serializable (~> 0.3.0)
+    jsonapi-renderer (0.2.2)
+    jsonapi-serializable (0.3.1)
+      jsonapi-renderer (~> 0.2.0)
     kaminari (1.2.2)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.2.2)
@@ -211,8 +220,13 @@ GEM
       unicode-display_width (>= 2.4.0, < 3.0)
     rubocop-ast (1.28.1)
       parser (>= 3.2.1.0)
-    rubocop-shopify (2.13.0)
-      rubocop (~> 1.50)
+    rubocop-performance (1.17.1)
+      rubocop (>= 1.7.0, < 2.0)
+      rubocop-ast (>= 0.4.0)
+    rubocop-rails (2.19.1)
+      activesupport (>= 4.2.0)
+      rack (>= 1.1)
+      rubocop (>= 1.33.0, < 2.0)
     ruby-progressbar (1.13.0)
     shoulda (4.0.0)
       shoulda-context (~> 2.0)
@@ -236,12 +250,13 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  annotate
+  annotaterb
   bootsnap
   debug
   factory_bot_rails
   faker
   jb
+  jsonapi-rails
   kaminari
   pg (~> 1.1)
   puma (~> 5.0)
@@ -249,7 +264,8 @@ DEPENDENCIES
   pundit-matchers (~> 2.1)
   rack-cors
   rails (~> 7.0.4, >= 7.0.4.3)
-  rubocop-shopify
+  rubocop-performance
+  rubocop-rails
   shoulda
   strong_migrations
   tzinfo-data

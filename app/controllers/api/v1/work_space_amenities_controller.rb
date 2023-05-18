@@ -3,8 +3,8 @@ class WorkSpaceAmenitesController < ApplicationController
 
   def index
     @work_space_amenities = WorkSpaceAmenity.order(:name)
-																						.page(params[:page])
-																						.per(params[:per_page])
+                                            .page(params[:page])
+                                            .per(params[:per_page])
     render json: { message: 'loaded work_space_amenities', data: @work_space_amenities }, status: :ok
   end
 
@@ -51,6 +51,6 @@ class WorkSpaceAmenitesController < ApplicationController
   def set_work_space_amenity
     @work_space_amenity = WorkSpaceAmenity.find_by(id: params[:id])
     @work_space_amenity.present? or return render json: { errors: t('errors.messages.item_not_found') },
-                                                           status: :unprocessable_entity
+                                                  status: :unprocessable_entity
   end
 end

@@ -3,10 +3,10 @@ class Api::V1::BookingsController < ApplicationController
 
   def index
     @bookings = Booking.order(:created_at)
-		@bookings = @bookings.for_business(params[:business_id]) if params[:business_id].present?
-		@bookings = @bookings.for_user(params[:user_id]) if params[:user_id].present?
-		@bookings = @bookings.page(params[:page]).per(params[:per_page])
-		return unless stale?(@bookings)
+    @bookings = @bookings.for_business(params[:business_id]) if params[:business_id].present?
+    @bookings = @bookings.for_user(params[:user_id]) if params[:user_id].present?
+    @bookings = @bookings.page(params[:page]).per(params[:per_page])
+    return unless stale?(@bookings)
 
     render json: { message: 'loaded bookings', data: @bookings }, status: :ok
   end
@@ -48,16 +48,16 @@ class Api::V1::BookingsController < ApplicationController
 
   def booking_params
     params.permit(
-			:start_time,
-			:end_time,
-			:user_id,
-			:work_space_id
-		)
+      :start_time,
+      :end_time,
+      :user_id,
+      :work_space_id
+    )
   end
 
   def set_booking
     @booking = Booking.find_by(id: params[:id])
     @booking.present? or return render json: { errors: t('errors.messages.item_not_found') },
-                                             status: :unprocessable_entity
+                                       status: :unprocessable_entity
   end
 end

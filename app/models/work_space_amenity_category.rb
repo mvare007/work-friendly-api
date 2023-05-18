@@ -12,9 +12,9 @@
 #  index_work_space_amenity_categories_on_name  (name) UNIQUE
 #
 class WorkSpaceAmenityCategory < ApplicationRecord
-	# Associations
-	has_many :work_space_amenities, dependent: :nullify
+  # Associations
+  has_many :work_space_amenities, dependent: :nullify
 
-	# Validations
-	validates :name, presence: true, uniqueness: true, length: { maximum: 255 }
+  # Validations
+  validates :name, presence: true, uniqueness: true, length: { maximum: 255 }
 end

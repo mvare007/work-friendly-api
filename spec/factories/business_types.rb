@@ -12,11 +12,11 @@
 #  index_business_types_on_name  (name) UNIQUE
 #
 FactoryBot.define do
-	factory :business_type do
-		sequence(:name) { |n| "#{n}#{Faker::Lorem.word}" }
+  factory :business_type do
+    sequence(:name) { |n| "#{n}#{Faker::Lorem.word}" }
 
-		initialize_with do
-			BusinessType.find_by(name: attributes[:name]) || BusinessType.new(attributes)
-		end
-	end
+    initialize_with do
+      BusinessType.find_by(name: attributes[:name]) || BusinessType.new(attributes)
+    end
+  end
 end

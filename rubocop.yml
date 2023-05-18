@@ -1,2 +1,13 @@
-inherit_gem:
-  rubocop-shopify: rubocop.yml
+require:
+  - rubocop-rails
+  - rubocop-performance
+AllCops:
+  Exclude:
+    - 'db/schema.rb'
+    - 'log/**'
+    - 'app/channels/**/*'
+    - 'node_modules/**/*'
+    - 'tmp/**/*'
+Style/Documentation:
+  Enabled: false
+

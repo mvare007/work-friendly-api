@@ -19,11 +19,11 @@
 #  fk_rails_...  (facility_amenity_category_id => facility_amenity_categories.id)
 #
 class FacilityAmenity < ApplicationRecord
-	# Associations
-	belongs_to :facility_amenity_category, optional: true
-	has_many :business_facility_amenities, dependent: :destroy
+  # Associations
+  belongs_to :facility_amenity_category, optional: true
+  has_many :business_facility_amenities, dependent: :destroy
 
-	# Validations
-	validates :name, presence: true, length: { maximum: 255 }, uniqueness: true
-	validates :description, length: { maximum: 1000 }
+  # Validations
+  validates :name, presence: true, length: { maximum: 255 }, uniqueness: true
+  validates :description, length: { maximum: 1000 }
 end

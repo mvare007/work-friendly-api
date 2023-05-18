@@ -1,16 +1,16 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.2.2"
+ruby '3.2.2'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.0.4", ">= 7.0.4.3"
+gem 'rails', '~> 7.0.4', '>= 7.0.4.3'
 
 # Use postgresql as the database for Active Record
-gem "pg", "~> 1.1"
+gem 'pg', '~> 1.1'
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 5.0"
+gem 'puma', '~> 5.0'
 
 # A simple and fast JSON API template engine for Ruby on Rails
 gem 'jb'
@@ -25,16 +25,16 @@ gem 'jb'
 # gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 # Reduces boot times through caching; required in config/boot.rb
-gem "bootsnap", require: false
+gem 'bootsnap', require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-gem "rack-cors"
+gem 'rack-cors'
 
 #  A Scope & Engine based, clean, powerful, customizable and sophisticated paginator
 gem 'kaminari'
@@ -42,9 +42,12 @@ gem 'kaminari'
 # Minimal authorization through OO design and pure Ruby classes
 gem 'pundit'
 
+# Rails gem for fast jsonapi-compliant APIs. https://jsonapi-rb.org
+gem 'jsonapi-rails'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem 'debug', platforms: %i[mri mingw x64_mingw]
 
   # A library for generating fake data such as names, addresses, and phone numbers.
   gem 'faker'
@@ -55,13 +58,16 @@ end
 
 group :development do
   # Annotate Rails classes with schema and routes info
-  gem 'annotate', require: false
+  gem "annotaterb"
 
   # Catch unsafe migrations
-  gem "strong_migrations"
+  gem 'strong_migrations'
 
-  # Shopify’s Ruby Style Guide ruby-style-guide.shopify.dev
-  gem "rubocop-shopify", require: false
+  #A RuboCop extension focused on enforcing Rails best practices and coding conventions.
+  gem 'rubocop-rails', require: false
+
+  # An extension of RuboCop focused on code performance checks.
+  gem 'rubocop-performance', require: false
 end
 
 group :test do
@@ -71,8 +77,3 @@ group :test do
   # Makes tests easy on the fingers and the eyes
   gem 'shoulda'
 end
-
-
-
-
-
