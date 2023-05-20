@@ -25,6 +25,9 @@ class City < ApplicationRecord
   # Validations
   validates :name, presence: true, length: { maximum: 255 }
 
+  # delegates
+  delegate :name, to: :country, prefix: true
+
   def activate!
     update!(active: true)
   end

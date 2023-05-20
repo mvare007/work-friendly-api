@@ -42,8 +42,11 @@ gem 'kaminari'
 # Minimal authorization through OO design and pure Ruby classes
 gem 'pundit'
 
-# Rails gem for fast jsonapi-compliant APIs. https://jsonapi-rb.org
-gem 'jsonapi-rails'
+# Simple, Fast, and Declarative Serialization Library for Ruby https://github.com/procore/blueprinter
+gem 'blueprinter'
+
+# Optimized JSON http://www.ohler.com/oj/
+gem 'oj'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

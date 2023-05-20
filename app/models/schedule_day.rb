@@ -21,6 +21,8 @@
 #  fk_rails_...  (business_id => businesses.id)
 #
 class ScheduleDay < ApplicationRecord
+  TIME_FORMAT = '%H:%M'.freeze
+
   # Associations
   belongs_to :business
 
@@ -41,10 +43,10 @@ class ScheduleDay < ApplicationRecord
   end
 
   def open_time
-    super&.strftime('%H:%M')
+    super&.strftime(TIME_FORMAT)
   end
 
   def close_time
-    super&.strftime('%H:%M')
+    super&.strftime(TIME_FORMAT)
   end
 end
