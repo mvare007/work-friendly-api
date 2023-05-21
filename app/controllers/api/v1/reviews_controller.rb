@@ -8,38 +8,38 @@ class Api::V1::ReviewsController < ApplicationController
     @reviews = @reviews.page(params[:page]).per(params[:per_page])
     return unless stale?(@reviews)
 
-    render json: { message: 'loaded review', data: @reviews }, status: :ok
+    render json: ReviewBlueprint.render(@reviews, root: :reviews), status: :ok
   end
 
   def show
-    render json: { message: 'loaded review', data: @reviews }, status: :ok
+    render json: ReviewBlueprint.render(@review), status: :ok
   end
 
   def create
     @review = Review.new(review_params)
 
     if @review.save
-      render json: { message: 'review is saved', data: @review }, status: :ok
+      render json: ReviewBlueprint.render(@review), status: :ok
     else
-      render json: { message: 'review is not saved', data: @review.errors },
+      render json: { review: ReviewBlueprint.render(@review), errors: @review.errors },
              status: :unprocessable_entity
     end
   end
 
   def update
     if @review.update(review_params)
-      render json: { message: 'review is updated', data: @review }, status: :ok
+      render json: ReviewBlueprint.render(@review), status: :ok
     else
-      render json: { message: 'review is not updated', data: @review.errors },
+      render json: { review: ReviewBlueprint.render(@review), errors: @review.errors },
              status: :unprocessable_entity
     end
   end
 
   def destroy
     if @review.destroy
-      render json: { message: 'review successfully deleted', data: @review }, status: :ok
+      render json: { message: 'deleted successfully' }, status: :ok
     else
-      render json: { message: 'review is not deleted', data: @review.errors },
+      render json: { review: ReviewBlueprint.render(@review), errors: @review.errors },
              status: :unprocessable_entity
     end
   end

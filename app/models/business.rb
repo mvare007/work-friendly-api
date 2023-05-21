@@ -29,6 +29,9 @@
 #  fk_rails_...  (city_id => cities.id)
 #
 class Business < ApplicationRecord
+  # Enums
+  enum status: { active: 0, inactive: 1, suspended: 2 }
+
   # Associations
   belongs_to :city
   belongs_to :business_type

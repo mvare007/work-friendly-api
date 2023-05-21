@@ -28,6 +28,9 @@ class WorkSpace < ApplicationRecord
   has_and_belongs_to_many :work_space_amenities
   has_many :bookings, dependent: :restrict_with_error
 
+  # Scopes
+  scope :for_business, ->(business_id) { where(business_id: business_id) }
+
   # Validations
   validates :name, presence: true, uniqueness: { scope: :business_id }, length: { maximum: 255 }
   validates :capacity, presence: true, numericality: { only_integer: true, greater_than: 0 }

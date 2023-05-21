@@ -9,6 +9,6 @@ Rails.application.routes.draw do
   end
 
   namespace :api, constraints: ApiConstraint.new, defaults: { format: :json } do
-    draw(:api_v1)
+    draw(:'api/v1')
   end
 end

@@ -12,6 +12,7 @@
 #  index_business_types_on_name  (name) UNIQUE
 #
 class BusinessType < ApplicationRecord
+
   # Associations
   has_many :businesses, dependent: :restrict_with_error
 

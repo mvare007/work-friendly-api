@@ -5,38 +5,38 @@ class Api::V1::CountriesController < ApplicationController
     @countries = Country.order(:name)
     return unless stale?(@countries)
 
-    render json: { message: 'loaded countries', data: @countries }, status: :ok
+    render json: CountryBlueprint.render(@countries, root: :countries), status: :ok
   end
 
   def show
-    render json: { message: 'loaded country', data: @country }, status: :ok
+    render json: CountryBlueprint.render(@country), status: :ok
   end
 
   def create
     @country = Country.new(country_params)
 
     if @country.save
-      render json: { message: 'country is saved', data: @country }, status: :ok
+      render json: CountryBlueprint.render(@country), status: :ok
     else
-      render json: { message: 'country is not saved', data: @country.errors },
+      render json: { country: CountryBlueprint.render(@country), errors: @country.errors },
              status: :unprocessable_entity
     end
   end
 
   def update
     if @country.update(country_params)
-      render json: { message: 'country is updated', data: @country }, status: :ok
+      render json: CountryBlueprint.render(@country), status: :ok
     else
-      render json: { message: 'country is not updated', data: @country.errors },
+      render json: { country: CountryBlueprint.render(@country), errors: @country.errors },
              status: :unprocessable_entity
     end
   end
 
   def destroy
     if @country.destroy
-      render json: { message: 'country successfully deleted', data: @country }, status: :ok
+      render json: { message: 'deleted successfully' }, status: :ok
     else
-      render json: { message: 'country is not deleted', data: @country.errors },
+      render json: { country: CountryBlueprint.render(@country), errors: @country.errors },
              status: :unprocessable_entity
     end
   end

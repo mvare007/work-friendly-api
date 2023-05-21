@@ -1,9 +1,9 @@
 class BookingBlueprint < ApplicationBlueprint
-  fields :start_time, :end_time, :status, :business_id, :user_id
+  fields :start_time, :end_time, :status, :work_space_id, :user_id
 
   view :extended do
-    excludes :business_id, :user_id
-    association :business, blueprint: BusinessBlueprint
+    excludes :work_space_id, :user_id
+    association :work_space, blueprint: WorkSpaceBlueprint
     association :user, blueprint: UserBlueprint
   end
 

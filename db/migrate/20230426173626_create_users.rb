@@ -10,6 +10,8 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.string :zip_code
       t.string :payment_info
       t.datetime :last_login
+      t.integer :status, default: 0, null: false
+
       t.references :city, null: false, foreign_key: true
 
       t.timestamps

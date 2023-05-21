@@ -5,38 +5,40 @@ class Api::V1::UsersController < ApplicationController
     @users = User.order(:name)
                  .page(params[:page])
                  .per(params[:per_page])
-    render json: { message: 'loaded users', data: @users }, status: :ok
+    return unless stale?(@users)
+
+    render json: UserBlueprint.render(@users, root: :users), status: :ok
   end
 
   def show
-    render json: { message: 'loaded user', data: @user }, status: :ok
+    render json: UserBlueprint.render(@user), status: :ok
   end
 
   def create
     @user = User.new(user_params)
 
     if @user.save
-      render json: { message: 'user is saved', data: @user }, status: :ok
+      render json: UserBlueprint.render(@user), status: :ok
     else
-      render json: { message: 'user is not saved', data: @user.errors },
+      render json: { user: UserBlueprint.render(@user), errors: @user.errors },
              status: :unprocessable_entity
     end
   end
 
   def update
     if @user.update(user_params)
-      render json: { message: 'user is updated', data: @user }, status: :ok
+      render json: UserBlueprint.render(@user), status: :ok
     else
-      render json: { message: 'user is not updated', data: @user.errors },
+      render json: { user: UserBlueprint.render(@user), errors: @user.errors },
              status: :unprocessable_entity
     end
   end
 
   def destroy
     if @user.destroy
-      render json: { message: 'user successfully deleted', data: @user }, status: :ok
+      render json: { message: 'deleted successfully' }, status: :ok
     else
-      render json: { message: 'user is not deleted', data: @user.errors },
+      render json: { user: UserBlueprint.render(@user), errors: @user.errors },
              status: :unprocessable_entity
     end
   end

@@ -28,6 +28,9 @@
 class User < ApplicationRecord
   encrypts :payment_info
 
+  # Enums
+  enum status: { active: 0, inactive: 1, suspended: 2 }
+
   # Associations
   belongs_to :city
   has_many :reviews, dependent: :restrict_with_error

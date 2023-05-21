@@ -5,38 +5,38 @@ class Api::V1::CitiesController < ApplicationController
     @cities = City.order(:name)
     return unless stale?(@cities)
 
-    render json: { message: 'loaded cities', data: @Cities }, status: :ok
+    render json: CityBlueprint.render(@cities, root: :cities), status: :ok
   end
 
   def show
-    render json: { message: 'loaded city', data: @city }, status: :ok
+    render json: CityBlueprint.render(@city), status: :ok
   end
 
   def create
     @city = City.new(city_params)
 
     if @city.save
-      render json: { message: 'city is saved', data: @city }, status: :ok
+      render json: CityBlueprint.render(@city), status: :ok
     else
-      render json: { message: 'city is not saved', data: @city.errors },
+      render json: { city: CityBlueprint.render(@city), errors: @city.errors },
              status: :unprocessable_entity
     end
   end
 
   def update
     if @city.update(city_params)
-      render json: { message: 'city is updated', data: @city }, status: :ok
+      render json: CityBlueprint.render(@city), status: :ok
     else
-      render json: { message: 'city is not updated', data: @city.errors },
+      render json: { city: CityBlueprint.render(@city), errors: @city.errors },
              status: :unprocessable_entity
     end
   end
 
   def destroy
     if @city.destroy
-      render json: { message: 'city successfully deleted', data: @city }, status: :ok
+      render json: { message: 'deleted successfully' }, status: :ok
     else
-      render json: { message: 'city is not deleted', data: @city.errors },
+      render json: { city: CityBlueprint.render(@city), errors: @city.errors },
              status: :unprocessable_entity
     end
   end
@@ -44,7 +44,7 @@ class Api::V1::CitiesController < ApplicationController
   private
 
   def city_params
-    params.permit(:name, :active, :country_id)
+    params.permit(:name, :country_id)
   end
 
   def set_city

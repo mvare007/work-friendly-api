@@ -3,38 +3,41 @@ class Api::V1::WorkSpacesController < ApplicationController
 
   def index
     @work_spaces = WorkSpace.order(:name)
-    render json: { message: 'loaded work_spaces', data: @work_spaces }, status: :ok
+    @work_spaces = @work_spaces.for_business(params[:business_id]) if params[:business_id].present?
+    @work_spaces = @work_spaces.page(params[:page]).per(params[:per_page])
+
+    render json: WorkSpaceBlueprint.render(@work_spaces, root: :work_spaces), status: :ok
   end
 
   def show
-    render json: { message: 'loaded work_space', data: @work_space }, status: :ok
+    render json: WorkSpaceBlueprint.render(@work_space), status: :ok
   end
 
   def create
     @work_space = WorkSpace.new(work_space_params)
 
     if @work_space.save
-      render json: { message: 'work_space is saved', data: @work_space }, status: :ok
+      render json: WorkSpaceBlueprint.render(@work_space), status: :ok
     else
-      render json: { message: 'work_space is not saved', data: @work_space.errors },
+      render json: { work_space: WorkSpaceBlueprint.render(@work_space), errors: @work_space.errors },
              status: :unprocessable_entity
     end
   end
 
   def update
     if @work_space.update(work_space_params)
-      render json: { message: 'work_space is updated', data: @work_space }, status: :ok
+      render json: WorkSpaceBlueprint.render(@work_space), status: :ok
     else
-      render json: { message: 'work_space is not updated', data: @work_space.errors },
+      render json: { work_space: WorkSpaceBlueprint.render(@work_space), errors: @work_space.errors },
              status: :unprocessable_entity
     end
   end
 
   def destroy
     if @work_space.destroy
-      render json: { message: 'work_space successfully deleted', data: @work_space }, status: :ok
+      render json: { message: 'deleted successfully' }, status: :ok
     else
-      render json: { message: 'work_space is not deleted', data: @work_space.errors },
+      render json: { work_space: WorkSpaceBlueprint.render(@work_space), errors: @work_space.errors },
              status: :unprocessable_entity
     end
   end

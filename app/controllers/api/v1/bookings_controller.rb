@@ -8,38 +8,38 @@ class Api::V1::BookingsController < ApplicationController
     @bookings = @bookings.page(params[:page]).per(params[:per_page])
     return unless stale?(@bookings)
 
-    render json: { message: 'loaded bookings', data: @bookings }, status: :ok
+    render json: BookingBlueprint.render(@bookings, root: :bookings), status: :ok
   end
 
   def show
-    render json: { message: 'loaded booking', data: @bookings }, status: :ok
+    render json: BookingBlueprint.render(@booking, view: :extended), status: :ok
   end
 
   def create
     @booking = Booking.new(booking_params)
 
     if @booking.save
-      render json: { message: 'booking is saved', data: @booking }, status: :ok
+      render json: BookingBlueprint.render(@booking), status: :ok
     else
-      render json: { message: 'booking is not saved', data: @booking.errors },
+      render json: { booking: BookingBlueprint.render(@booking), errors: @booking.errors },
              status: :unprocessable_entity
     end
   end
 
   def update
-    if @booking.update(booking_params)
-      render json: { message: 'booking is updated', data: @booking }, status: :ok
+    if @booking.update(booking_update_params)
+      render json: BookingBlueprint.render(@booking), status: :ok
     else
-      render json: { message: 'booking is not updated', data: @booking.errors },
+      render json: { booking: BookingBlueprint.render(@booking), errors: @booking.errors },
              status: :unprocessable_entity
     end
   end
 
   def destroy
     if @booking.destroy
-      render json: { message: 'booking successfully deleted', data: @booking }, status: :ok
+      render json: { message: 'deleted successfully' }, status: :ok
     else
-      render json: { message: 'booking is not deleted', data: @booking.errors },
+      render json: { booking: BookingBlueprint.render(@booking), errors: @booking.errors },
              status: :unprocessable_entity
     end
   end
@@ -53,6 +53,10 @@ class Api::V1::BookingsController < ApplicationController
       :user_id,
       :work_space_id
     )
+  end
+
+  def booking_update_params
+    params.permit(:status, :start_time, :end_time)
   end
 
   def set_booking

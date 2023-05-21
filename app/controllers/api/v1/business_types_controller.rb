@@ -7,38 +7,38 @@ class Api::V1::BusinessTypesController < ApplicationController
                                   .per(params[:per_page])
     return unless stale?(@business_types)
 
-    render json: { message: 'loaded business_type', data: @business_types }, status: :ok
+    render json: BusinessTypeBlueprint.render(@business_types, root: :business_types), status: :ok
   end
 
   def show
-    render json: { message: 'loaded business_type', data: @business_types }, status: :ok
+    render json: BusinessTypeBlueprint.render(@business_type), status: :ok
   end
 
   def create
     @business_type = BusinessType.new(business_type_params)
 
     if @business_type.save
-      render json: { message: 'business_type is saved', data: @business_type }, status: :ok
+      render json: BusinessTypeBlueprint.render(@business_type), status: :ok
     else
-      render json: { message: 'business_type is not saved', data: @business_type.errors },
+      render json: { business_type: BusinessTypeBlueprint.render(@business_type), errors: @business_type.errors },
              status: :unprocessable_entity
     end
   end
 
   def update
     if @business_type.update(business_type_params)
-      render json: { message: 'business_type is updated', data: @business_type }, status: :ok
+      render json: BusinessTypeBlueprint.render(@business_type), status: :ok
     else
-      render json: { message: 'business_type is not updated', data: @business_type.errors },
+      render json: { business_type: BusinessTypeBlueprint.render(@business_type), errors: @business_type.errors },
              status: :unprocessable_entity
     end
   end
 
   def destroy
     if @business_type.destroy
-      render json: { message: 'business_type successfully deleted', data: @business_type }, status: :ok
+      render json: BusinessTypeBlueprint.render(@business_type), status: :ok
     else
-      render json: { message: 'business_type is not deleted', data: @business_type.errors },
+      render json: { business_type: BusinessTypeBlueprint.render(@business_type), errors: @business_type.errors },
              status: :unprocessable_entity
     end
   end

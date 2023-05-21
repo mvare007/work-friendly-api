@@ -10,6 +10,9 @@ class CreateBusinesses < ActiveRecord::Migration[7.0]
       t.string :vat_number
       t.string :longitude
       t.string :latitude
+      t.integer :status, default: 0, null: false
+      t.index %i[longitude latitude]
+
       t.references :city, null: false, foreign_key: true
       t.references :business_type, null: false, foreign_key: true
 
