@@ -48,7 +48,7 @@ class Business < ApplicationRecord
 
   # Delegates
   with_options prefix: true do
-    delegate :name, to: :country
+    delegate :name, to: :city
     delegate :name, to: :business_type
   end
 

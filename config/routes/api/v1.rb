@@ -1,5 +1,9 @@
 namespace :v1 do
-  resources :users, concerns: :paginatable
+  resources :users, concerns: :paginatable do
+    collection do
+      get :datatable
+    end
+  end
 
   resources :businesses, concerns: :paginatable
   resources :business_types, concerns: :paginatable

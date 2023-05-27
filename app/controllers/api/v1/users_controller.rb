@@ -2,7 +2,7 @@ class Api::V1::UsersController < ApplicationController
   before_action :set_user, only: %i[show update destroy]
 
   def index
-    @users = User.order(:name)
+    @users = User.order(:first_name)
                  .page(params[:page])
                  .per(params[:per_page])
     return unless stale?(@users)
@@ -41,6 +41,10 @@ class Api::V1::UsersController < ApplicationController
       render json: { user: UserBlueprint.render(@user), errors: @user.errors },
              status: :unprocessable_entity
     end
+  end
+
+  def datatable
+    render json: UserDatatable.new(User.all)
   end
 
   private

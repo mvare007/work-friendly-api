@@ -31,6 +31,9 @@ class User < ApplicationRecord
   # Enums
   enum status: { active: 0, inactive: 1, suspended: 2 }
 
+  # Filters
+  self.filter_attributes = %i[email payment_info] unless Rails.env.development?
+
   # Associations
   belongs_to :city
   has_many :reviews, dependent: :restrict_with_error
