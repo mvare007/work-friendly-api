@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_31_095116) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_08_115241) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -133,7 +133,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_31_095116) do
     t.string "name", null: false
     t.string "uid", null: false
     t.string "secret", null: false
-    t.text "redirect_uri", null: false
+    t.text "redirect_uri"
     t.string "scopes", default: "", null: false
     t.boolean "confidential", default: true, null: false
     t.datetime "created_at", null: false
@@ -178,17 +178,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_31_095116) do
   create_table "users", force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
-    t.string "email", null: false
     t.string "phone_number"
     t.string "address"
     t.string "zip_code"
-    t.datetime "last_login"
     t.integer "status", default: 0, null: false
     t.bigint "city_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
     t.index ["city_id"], name: "index_users_on_city_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   create_table "work_space_amenities", force: :cascade do |t|
@@ -236,9 +240,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_31_095116) do
   add_foreign_key "cities", "countries"
   add_foreign_key "facility_amenities", "facility_amenity_categories"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
-  add_foreign_key "oauth_access_grants", "users", column: "resource_owner_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
-  add_foreign_key "oauth_access_tokens", "users", column: "resource_owner_id"
   add_foreign_key "reviews", "businesses"
   add_foreign_key "reviews", "users"
   add_foreign_key "schedule_days", "businesses"

@@ -4,22 +4,27 @@ class ApplicationController < ActionController::API
 
   # Doorkeeper code
   before_action :doorkeeper_authorize!
-  respond_to :json
 
   protected
 
   # Devise methods
   # Authentication key(:username) and password field will be added automatically by devise.
   def configure_permitted_parameters
-    added_attrs = %i[email first_name last_name]
+    added_attrs = %i[
+      email
+      first_name
+      last_name
+      address
+      zip_code
+      city_id
+    ]
     devise_parameter_sanitizer.permit :sign_up, keys: added_attrs
     devise_parameter_sanitizer.permit :account_update, keys: added_attrs
   end
 
   private
 
-  # Doorkeeper methods
-  def current_resource_owner
-    User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
+  def current_user
+    @current_user ||= User.find_by(id: doorkeeper_token & [:resource_owner_id])
   end
 end
