@@ -1,5 +1,4 @@
 require 'oj'
-require_relative '../../app/blueprints/transformers/lower_camel_transformer'
 
 Blueprinter.configure do |config|
   config.generator = Oj # default is JSON
