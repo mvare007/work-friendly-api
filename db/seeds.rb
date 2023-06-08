@@ -1,3 +1,9 @@
+# Doorkeeper
+if Doorkeeper::Application.count.zero?
+  Doorkeeper::Application.create(name: 'Web Client', redirect_uri: '', scopes: '')
+  Doorkeeper::Application.create(name: 'Android Client', redirect_uri: '', scopes: '')
+end
+
 ############### COUNTRIES & CITIES ######################
 Countries::SyncService.call
 

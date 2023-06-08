@@ -48,8 +48,11 @@ gem 'blueprinter'
 # Optimized JSON http://www.ohler.com/oj/
 gem 'oj'
 
-# Magical Authentication https://github.com/Sorcery/sorcery
-# gem 'sorcery'
+# Doorkeeper is an OAuth 2 provider https://doorkeeper.gitbook.io/guides/ruby-on-rails/
+gem 'doorkeeper'
+
+# Flexible authentication solution for Rails with Warden.
+gem 'devise'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

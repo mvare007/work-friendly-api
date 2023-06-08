@@ -1,5 +1,5 @@
 class ApiConstraint
   def matches?(request)
-    request.format == :json || request.format == :xlsx
+    request.format == :json
   end
 end

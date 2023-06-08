@@ -1,4 +1,5 @@
 class Api::V1::UsersController < ApplicationController
+  skip_before_action :doorkeeper_authorize!, only: %i[create]
   before_action :set_user, only: %i[show update destroy]
 
   def index
@@ -15,13 +16,37 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
+    user = User.new(user_params)
 
-    if @user.save
-      render json: UserBlueprint.render(@user), status: :ok
+    client_app = Doorkeeper::Application.find_by(uid: params[:client_id])
+
+    return render json: { error: 'Invalid client ID' }, status: :forbidden unless client_app
+
+    if user.save
+      # create access token for the user, so the user won't need to login again after registration
+      access_token = Doorkeeper::AccessToken.create(
+        resource_owner_id: user.id,
+        application_id: client_app.id,
+        refresh_token: generate_refresh_token,
+        expires_in: Doorkeeper.configuration.access_token_expires_in.to_i,
+        scopes: ''
+      )
+
+      # return json containing access token and refresh token
+      # so that user won't need to call login API right after registration
+      render json: {
+        user: {
+          id: user.id,
+          email: user.email,
+          access_token: access_token.token,
+          token_type: 'bearer',
+          expires_in: access_token.expires_in,
+          refresh_token: access_token.refresh_token,
+          created_at: access_token.created_at.to_time.to_i
+        }
+      }
     else
-      render json: { user: UserBlueprint.render(@user), errors: @user.errors },
-             status: :unprocessable_entity
+      render json: { errors: user.errors }, status: :unprocessable_entity
     end
   end
 
@@ -55,8 +80,6 @@ class Api::V1::UsersController < ApplicationController
       :email,
       :first_name,
       :last_name,
-      :password_digest,
-      :payment_info,
       :phone_number,
       :zip_code,
       :city_id
@@ -67,5 +90,14 @@ class Api::V1::UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
     @user.present? or return render json: { errors: t('errors.messages.item_not_found') },
                                     status: :unprocessable_entity
+  end
+
+  def generate_refresh_token
+    loop do
+      # generate a random token string and return it,
+      # unless there is already another token with the same string
+      refresh_token = SecureRandom.hex(32)
+      break refresh_token unless Doorkeeper::AccessToken.exists?(refresh_token:)
+    end
   end
 end
