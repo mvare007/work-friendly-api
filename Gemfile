@@ -67,7 +67,10 @@ end
 
 group :development do
   # Annotate Rails classes with schema and routes info
-  gem "annotaterb"
+  gem "annotaterb", require: false
+
+  # Annotates routes in controllers
+  gem "chusaku", require: false
 
   # Catch unsafe migrations
   gem 'strong_migrations'

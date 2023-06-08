@@ -10,4 +10,11 @@ AllCops:
     - 'tmp/**/*'
 Metrics:
   Enabled: false
-
+Style:
+  Documentation:
+    Enabled: false
+  FrozenStringLiteralComment:
+    Enabled: false
+Naming:
+  MethodName:
+    enabled: false
