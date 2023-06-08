@@ -1,0 +1,13 @@
+require:
+  - rubocop-rails
+  - rubocop-performance
+AllCops:
+  Exclude:
+    - 'db/schema.rb'
+    - 'log/**'
+    - 'app/channels/**/*'
+    - 'node_modules/**/*'
+    - 'tmp/**/*'
+Metrics:
+  Enabled: false
+
