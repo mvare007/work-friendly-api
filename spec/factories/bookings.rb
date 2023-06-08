@@ -5,6 +5,7 @@
 #  id            :bigint           not null, primary key
 #  end_time      :datetime         not null
 #  start_time    :datetime         not null
+#  status        :integer          default("0"), not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  user_id       :bigint           not null
@@ -12,8 +13,9 @@
 #
 # Indexes
 #
-#  index_bookings_on_user_id        (user_id)
-#  index_bookings_on_work_space_id  (work_space_id)
+#  index_bookings_on_user_id         (user_id)
+#  index_bookings_on_work_space_id   (work_space_id)
+#  index_bookings_user_ws_start_end  (user_id,work_space_id,start_time,end_time) UNIQUE
 #
 # Foreign Keys
 #

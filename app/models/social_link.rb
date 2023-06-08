@@ -3,7 +3,7 @@
 # Table name: social_links
 #
 #  id          :bigint           not null, primary key
-#  platform    :integer          not null
+#  platform    :string           not null
 #  url         :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null

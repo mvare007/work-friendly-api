@@ -3,7 +3,7 @@
 # Table name: countries
 #
 #  id           :bigint           not null, primary key
-#  active       :boolean          default(FALSE), not null
+#  active       :boolean          default("false"), not null
 #  currency     :string
 #  dialing_code :string
 #  iso2_code    :string

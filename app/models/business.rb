@@ -10,6 +10,7 @@
 #  longitude        :string
 #  name             :string           not null
 #  phone_number     :string
+#  status           :integer          default("0"), not null
 #  vat_number       :string
 #  zip_code         :string           not null
 #  created_at       :datetime         not null
@@ -19,9 +20,10 @@
 #
 # Indexes
 #
-#  index_businesses_on_business_type_id  (business_type_id)
-#  index_businesses_on_city_id           (city_id)
-#  index_businesses_on_email             (email) UNIQUE
+#  index_businesses_on_business_type_id        (business_type_id)
+#  index_businesses_on_city_id                 (city_id)
+#  index_businesses_on_email                   (email) UNIQUE
+#  index_businesses_on_longitude_and_latitude  (longitude,latitude)
 #
 # Foreign Keys
 #

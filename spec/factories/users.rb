@@ -2,19 +2,18 @@
 #
 # Table name: users
 #
-#  id              :bigint           not null, primary key
-#  address         :string
-#  email           :string           not null
-#  first_name      :string           not null
-#  last_login      :datetime
-#  last_name       :string           not null
-#  password_digest :string           not null
-#  payment_info    :string
-#  phone_number    :string
-#  zip_code        :string
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  city_id         :bigint           not null
+#  id           :bigint           not null, primary key
+#  address      :string
+#  email        :string           not null
+#  first_name   :string           not null
+#  last_login   :datetime
+#  last_name    :string           not null
+#  phone_number :string
+#  status       :integer          default("0"), not null
+#  zip_code     :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  city_id      :bigint           not null
 #
 # Indexes
 #

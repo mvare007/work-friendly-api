@@ -6,7 +6,7 @@
 #  available_from :time
 #  available_to   :time
 #  capacity       :integer
-#  is_available   :boolean          default(TRUE), not null
+#  is_available   :boolean          default("true"), not null
 #  name           :string
 #  price_per_hour :decimal(, )
 #  created_at     :datetime         not null
