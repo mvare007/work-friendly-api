@@ -1,5 +1,5 @@
 class UserBlueprint < ApplicationBlueprint
-  fields :first_name, :last_name, :email, :address, :zip_code, :phone_number, :city_id, :created_at, :updated_at
+  fields :first_name, :last_name, :email, :address, :zip_code, :city_id, :created_at, :updated_at
 
   view :city do
     exclude :city_id

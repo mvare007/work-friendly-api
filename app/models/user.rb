@@ -2,23 +2,27 @@
 #
 # Table name: users
 #
-#  id           :bigint           not null, primary key
-#  address      :string
-#  email        :string           not null
-#  first_name   :string           not null
-#  last_login   :datetime
-#  last_name    :string           not null
-#  phone_number :string
-#  status       :integer          default("0"), not null
-#  zip_code     :string
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  city_id      :bigint           not null
+#  id                     :bigint           not null, primary key
+#  address                :string
+#  email                  :string           default(""), not null
+#  encrypted_password     :string           default(""), not null
+#  first_name             :string           not null
+#  last_name              :string           not null
+#  phone_number           :string
+#  remember_created_at    :datetime
+#  reset_password_sent_at :datetime
+#  reset_password_token   :string
+#  status                 :integer          default("0"), not null
+#  zip_code               :string
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  city_id                :bigint           not null
 #
 # Indexes
 #
-#  index_users_on_city_id  (city_id)
-#  index_users_on_email    (email) UNIQUE
+#  index_users_on_city_id               (city_id)
+#  index_users_on_email                 (email) UNIQUE
+#  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 # Foreign Keys
 #
@@ -28,13 +32,13 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :validatable
 
   # Enums
   enum status: { active: 0, inactive: 1, suspended: 2 }
 
   # Filters
-  self.filter_attributes = %i[email payment_info] unless Rails.env.development?
+  self.filter_attributes = %i[encrypted_password reset_password_token] unless Rails.env.development?
 
   # Associations
   belongs_to :city
@@ -53,9 +57,7 @@ class User < ApplicationRecord
   # Validations
   validates :first_name, :last_name, presence: true, length: { maximum: 255 }
   validates :email, presence: true, length: { maximum: 255 }, uniqueness: true, format: URI::MailTo::EMAIL_REGEXP
-  validates :password_digest, presence: true, length: { maximum: 255 }
-  validates :address, :zip_code, :phone_number, length: { maximum: 255 }
-  validates :payment_info, length: { maximum: 255 }
+  validates :address, :zip_code, length: { maximum: 255 }
 
   def full_name = "#{first_name} #{last_name}"
 
@@ -65,7 +67,7 @@ class User < ApplicationRecord
   end
 
   ##
-  # This Ruby function revokes all access tokens for a specific client app and user using Doorkeeper.
+  # Revokes all access tokens for a specific client app and user using Doorkeeper.
   #
   # Args:
   # client_app<Doorkeeper::Application>: The parameter `client_app` is an object representing a client application that
