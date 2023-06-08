@@ -1,6 +1,8 @@
 class Api::V1::CountriesController < ApplicationController
   before_action :set_country, only: %i[show update destroy]
 
+  # @route GET /api/v1/countries(/page/:page/per_page/:per_page) {format: :json} (api_v1_countries)
+  # @route GET /api/v1/countries {format: :json}
   def index
     @countries = Country.order(:name)
     return unless stale?(@countries)
@@ -8,10 +10,12 @@ class Api::V1::CountriesController < ApplicationController
     render json: CountryBlueprint.render(@countries, root: :countries), status: :ok
   end
 
+  # @route GET /api/v1/countries/:id {format: :json} (api_v1_country)
   def show
     render json: CountryBlueprint.render(@country), status: :ok
   end
 
+  # @route POST /api/v1/countries {format: :json}
   def create
     @country = Country.new(country_params)
 
@@ -23,6 +27,8 @@ class Api::V1::CountriesController < ApplicationController
     end
   end
 
+  # @route PATCH /api/v1/countries/:id {format: :json} (api_v1_country)
+  # @route PUT /api/v1/countries/:id {format: :json} (api_v1_country)
   def update
     if @country.update(country_params)
       render json: CountryBlueprint.render(@country), status: :ok
@@ -32,6 +38,7 @@ class Api::V1::CountriesController < ApplicationController
     end
   end
 
+  # @route DELETE /api/v1/countries/:id {format: :json} (api_v1_country)
   def destroy
     if @country.destroy
       render json: { message: 'deleted successfully' }, status: :ok

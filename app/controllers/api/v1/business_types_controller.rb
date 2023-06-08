@@ -1,6 +1,8 @@
 class Api::V1::BusinessTypesController < ApplicationController
   before_action :set_business_type, only: %i[show update destroy]
 
+  # @route GET /api/v1/business_types(/page/:page/per_page/:per_page) {format: :json} (api_v1_business_types)
+  # @route GET /api/v1/business_types {format: :json}
   def index
     @business_types = BusinessType.order(:name)
                                   .page(params[:page])
@@ -10,10 +12,12 @@ class Api::V1::BusinessTypesController < ApplicationController
     render json: BusinessTypeBlueprint.render(@business_types, root: :business_types), status: :ok
   end
 
+  # @route GET /api/v1/business_types/:id {format: :json} (api_v1_business_type)
   def show
     render json: BusinessTypeBlueprint.render(@business_type), status: :ok
   end
 
+  # @route POST /api/v1/business_types {format: :json}
   def create
     @business_type = BusinessType.new(business_type_params)
 
@@ -25,6 +29,8 @@ class Api::V1::BusinessTypesController < ApplicationController
     end
   end
 
+  # @route PATCH /api/v1/business_types/:id {format: :json} (api_v1_business_type)
+  # @route PUT /api/v1/business_types/:id {format: :json} (api_v1_business_type)
   def update
     if @business_type.update(business_type_params)
       render json: BusinessTypeBlueprint.render(@business_type), status: :ok
@@ -34,6 +40,7 @@ class Api::V1::BusinessTypesController < ApplicationController
     end
   end
 
+  # @route DELETE /api/v1/business_types/:id {format: :json} (api_v1_business_type)
   def destroy
     if @business_type.destroy
       render json: BusinessTypeBlueprint.render(@business_type), status: :ok

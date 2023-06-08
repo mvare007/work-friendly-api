@@ -3,12 +3,11 @@ class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
-  # GET /resource/sign_up
   # def new
   #   super
   # end
 
-  # POST /resource
+  # @route POST /api/v1/users {format: :json} (api_v1_user_registration)
   def create
     build_resource(sign_up_params)
     resource.save
@@ -27,7 +26,6 @@ class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
     end
   end
 
-  # GET /resource/edit
   # def edit
   #   super
   # end
@@ -37,12 +35,10 @@ class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # DELETE /resource
   # def destroy
   #   super
   # end
 
-  # GET /resource/cancel
   # Forces the session data which is usually expired after sign
   # in to be expired now. This is useful if the user wants to
   # cancel oauth signing in/up in the middle of the process,

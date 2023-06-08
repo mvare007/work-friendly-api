@@ -1,6 +1,8 @@
 class Api::V1::BusinessesController < ApplicationController
   before_action :set_business, only: %i[show update destroy]
 
+  # @route GET /api/v1/businesses(/page/:page/per_page/:per_page) {format: :json} (api_v1_businesses)
+  # @route GET /api/v1/businesses {format: :json}
   def index
     @businesses = Business.includes(:schedule_days, :social_links)
                           .order(:name)
@@ -11,10 +13,12 @@ class Api::V1::BusinessesController < ApplicationController
     render json: BusinessBlueprint.render(@businesses, root: :businesses), status: :ok
   end
 
+  # @route GET /api/v1/businesses/:id {format: :json} (api_v1_business)
   def show
     render json: BusinessBlueprint.render(@business, view: :extended), status: :ok
   end
 
+  # @route POST /api/v1/businesses {format: :json}
   def create
     @business = Business.new(business_params)
 
@@ -26,6 +30,8 @@ class Api::V1::BusinessesController < ApplicationController
     end
   end
 
+  # @route PATCH /api/v1/businesses/:id {format: :json} (api_v1_business)
+  # @route PUT /api/v1/businesses/:id {format: :json} (api_v1_business)
   def update
     if @business.update(business_params)
       render json: BusinessBlueprint.render(@business), status: :ok
@@ -35,6 +41,7 @@ class Api::V1::BusinessesController < ApplicationController
     end
   end
 
+  # @route DELETE /api/v1/businesses/:id {format: :json} (api_v1_business)
   def destroy
     if @business.destroy
       render json: { message: 'deleted successfully' }, status: :ok

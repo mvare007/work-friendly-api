@@ -1,6 +1,8 @@
 class Api::V1::ReviewsController < ApplicationController
   before_action :set_review, only: %i[show update destroy]
 
+  # @route GET /api/v1/reviews(/page/:page/per_page/:per_page) {format: :json} (api_v1_reviews)
+  # @route GET /api/v1/reviews {format: :json}
   def index
     @reviews = Review.order(:created_at)
     @reviews = @reviews.for_business(params[:business_id]) if params[:business_id].present?
@@ -11,10 +13,12 @@ class Api::V1::ReviewsController < ApplicationController
     render json: ReviewBlueprint.render(@reviews, root: :reviews), status: :ok
   end
 
+  # @route GET /api/v1/reviews/:id {format: :json} (api_v1_review)
   def show
     render json: ReviewBlueprint.render(@review), status: :ok
   end
 
+  # @route POST /api/v1/reviews {format: :json}
   def create
     @review = Review.new(review_params)
 
@@ -26,6 +30,8 @@ class Api::V1::ReviewsController < ApplicationController
     end
   end
 
+  # @route PATCH /api/v1/reviews/:id {format: :json} (api_v1_review)
+  # @route PUT /api/v1/reviews/:id {format: :json} (api_v1_review)
   def update
     if @review.update(review_params)
       render json: ReviewBlueprint.render(@review), status: :ok
@@ -35,6 +41,7 @@ class Api::V1::ReviewsController < ApplicationController
     end
   end
 
+  # @route DELETE /api/v1/reviews/:id {format: :json} (api_v1_review)
   def destroy
     if @review.destroy
       render json: { message: 'deleted successfully' }, status: :ok
