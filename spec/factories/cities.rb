@@ -19,7 +19,6 @@
 FactoryBot.define do
   factory :city do
     name { Faker::Address.city }
-    active { true }
 
     association :country, strategy: :create
 
