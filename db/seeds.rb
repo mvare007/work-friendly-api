@@ -193,3 +193,6 @@ end
   work_space_amenity_category = WorkSpaceAmenityCategory.find_by!(name: 'Privacy')
   WorkSpaceAmenity.find_or_create_by!(name:, work_space_amenity_category:)
 end
+
+# Seed Example
+Rake::Task['seed_example:lisbon'].invoke if Rails.env.development?
