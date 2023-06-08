@@ -1,4 +1,4 @@
-class BusinessDatatable < ApplicationDataTable
+class BusinessDatatable < ApplicationDatatable
   def sort_field = :name
 
   def permitted_actions = %i[show update destroy]

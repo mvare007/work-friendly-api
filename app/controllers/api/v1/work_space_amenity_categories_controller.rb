@@ -1,4 +1,4 @@
-class WorkSpaceAmenityCategoriesController < ApplicationController
+class Api::V1::WorkSpaceAmenityCategoriesController < ApplicationController
   before_action :set_work_space_amenity_category, only: %i[show update destroy]
 
   def index

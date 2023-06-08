@@ -1,4 +1,4 @@
-class FacilityAmenityCategoriesController < ApplicationController
+class Api::V1::FacilityAmenityCategoriesController < ApplicationController
   before_action :set_facility_amenity_category, only: %i[show update destroy]
 
   def index
